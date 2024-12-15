@@ -84,7 +84,8 @@ class PersonalResource extends Resource
                     })->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('compania_id')->label('Compania:')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
+                ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable()->searchable(),
             ])
             ->filters([
                 //

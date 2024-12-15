@@ -73,4 +73,13 @@ class Personal extends Model
     {
         return $this->belongsTo(Pais::class, 'nacionalidad_id');
     }
+
+    public function obtenerNombreCompania()
+    {
+        $id_compania = $this->compania_id;
+
+        $compania = CompaniaVista::where('idcompanias', $id_compania)->first();
+
+        return $compania->compania;
+    }
 }
