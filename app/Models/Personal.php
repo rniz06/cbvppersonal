@@ -60,4 +60,15 @@ class Personal extends Model
     {
         return $this->belongsTo(Sexo::class, 'sexo_id');
     }
+
+    /**
+     * Relación de "uno a muchos" con la tabla "paises".
+     * Cada registro de este modelo pertenece a un pais específico a través del campo "nacionalidad_id".
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function pais()
+    {
+        return $this->belongsTo(Pais::class, 'nacionalidad_id');
+    }
 }

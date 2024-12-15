@@ -13,4 +13,15 @@ class Pais extends Model
     protected $fillable = [
         'pais',
     ];
+
+    /**
+     * Relación de "uno a muchos" (inversa) con la tabla "personal".
+     * Un Pais puede tener varios registros asociados en la tabla "personal".
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function personales()
+    {
+        return $this->hasMany(Personal::class);
+    }
 }
