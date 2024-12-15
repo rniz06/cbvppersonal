@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonalResource\Pages;
 use App\Filament\Resources\PersonalResource\RelationManagers;
+use App\Models\CompaniaVista;
 use App\Models\Personal;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -43,7 +44,7 @@ class PersonalResource extends Resource
                             ->preload(),
                         Forms\Components\Select::make('compania_id')->label('Compañia:')
                             ->required()
-                            ->options(['1' => '1'])
+                            ->options(CompaniaVista::obtenerListadoCompanias())
                             ->preload()
                             ->searchable(),
                         Forms\Components\Select::make('estado_id')->label('Estado:')
