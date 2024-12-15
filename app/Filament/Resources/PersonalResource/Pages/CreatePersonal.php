@@ -16,4 +16,11 @@ class CreatePersonal extends CreateRecord
     {
         return PersonalResource::getUrl('index');
     }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['nombrecompleto'] = $data['apellidos'] . ' ' . ',' . ' ' . $data['nombres'];
+
+        return $data;
+    }
 }

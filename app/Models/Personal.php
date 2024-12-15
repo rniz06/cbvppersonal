@@ -13,6 +13,8 @@ class Personal extends Model
 
     protected $primaryKey = 'idpersonal';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nombres',
         'apellidos',

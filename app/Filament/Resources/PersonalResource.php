@@ -27,7 +27,40 @@ class PersonalResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('nombres')->label('Nombres:')->required()->maxLength(45),
+                        Forms\Components\TextInput::make('apellidos')->label('Apellidos:')->required()->maxLength(45),
+                        Forms\Components\TextInput::make('codigo')->label('Codigo:')->required()->numeric()->mask('99999'),
+                        Forms\Components\TextInput::make('fecha_juramento')->label('Fecha Juramento:')->required()->numeric()->mask('9999'),
+                        Forms\Components\TextInput::make('documento')->label('Documento:')->required()->mask('999999999999999'),
+                    ])->columns(3),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Select::make('categoria_id')->label('Categoria:')
+                            ->required()
+                            ->relationship('categoria', 'categoria')
+                            ->preload(),
+                        Forms\Components\Select::make('compania_id')->label('Compañia:')
+                            ->required()
+                            ->options(['1' => '1'])
+                            ->preload()
+                            ->searchable(),
+                        Forms\Components\Select::make('estado_id')->label('Estado:')
+                            ->required()
+                            ->relationship('estado', 'estado')
+                            ->preload()
+                            ->searchable(),
+                        Forms\Components\Select::make('sexo_id')->label('Sexo:')
+                            ->required()
+                            ->relationship('sexo', 'sexo')
+                            ->preload(),
+                        Forms\Components\Select::make('nacionalidad_id')->label('Nacionalidad:')
+                            ->required()
+                            ->relationship('pais', 'pais')
+                            ->preload()
+                            ->searchable(),
+                    ])->columns(3),
             ]);
     }
 
