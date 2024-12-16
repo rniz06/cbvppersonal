@@ -25,28 +25,25 @@ class ListPersonals extends ListRecords
 
     public function getTabs(): array
     {
-        // Obtener id de la categoria "COMBATIENTE"
-        $id_cat_combatiente = Categoria::where('categoria', 'COMBATIENTE')->first();
+        // Obtener los IDs de categorías y sexos en una sola consulta
+        $categorias = Categoria::whereIn('categoria', ['COMBATIENTE', 'ACTIVO'])
+            ->pluck('idpersonal_categorias', 'categoria')
+            ->toArray();
 
-        // Obtener id de la categoria "ACTIVO"
-        $id_cat_activo = Categoria::where('categoria', 'ACTIVO')->first();
-
-        // Obtener id de la sexo "MASCULINO"
-        $id_sexo_masculino = Sexo::where('sexo', 'MASCULINO')->first();
-
-        // Obtener id de la sexo "FEMENINO"
-        $id_sexo_femenino = Sexo::where('sexo', 'FEMENINO')->first();
+        $sexos = Sexo::whereIn('sexo', ['MASCULINO', 'FEMENINO'])
+            ->pluck('idpersonal_sexo', 'sexo')
+            ->toArray();
 
         return [
             'todos' => Tab::make(),
             'categoria_combatiente' => Tab::make()->label('Cat: Combatiente')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('categoria_id', $id_cat_combatiente->idpersonal_categorias)),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('categoria_id', $categorias['COMBATIENTE'])),
             'categoria_activo' => Tab::make()->label('Cat: Activo')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('categoria_id', $id_cat_activo->idpersonal_categorias)),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('categoria_id', $categorias['ACTIVO'])),
             'sexo_masculino' => Tab::make()->label('Masculino')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('sexo_id', $id_sexo_masculino->idpersonal_sexo)),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('sexo_id', $sexos['MASCULINO'])),
             'sexo_femenino' => Tab::make()->label('Femenino')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('sexo_id', $id_sexo_femenino->idpersonal_sexo)),
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('sexo_id', $sexos['FEMENINO'])),
         ];
     }
 }
