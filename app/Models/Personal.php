@@ -74,6 +74,10 @@ class Personal extends Model
         return $this->belongsTo(Pais::class, 'nacionalidad_id');
     }
 
+    /**
+     * Metodo empleado para realizar una consulta a la base de datos emepy_bd
+     * a la tabla (VISTA) de companias para obtener y mostrar el nombre de la compania
+     */
     public function obtenerNombreCompania()
     {
         $id_compania = $this->compania_id;

@@ -10,6 +10,8 @@ class ListPersonals extends ListRecords
 {
     protected static string $resource = PersonalResource::class;
 
+    protected static ?string $title = 'Personales';
+
     protected function getHeaderActions(): array
     {
         return [

@@ -6,6 +6,7 @@ use App\Filament\Resources\PersonalResource\Pages;
 use App\Filament\Resources\PersonalResource\RelationManagers;
 use App\Models\CompaniaVista;
 use App\Models\Personal;
+use App\Models\Personal\Categoria;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -85,10 +86,69 @@ class PersonalResource extends Resource
                 Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
-                ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable()->searchable(),
-            ])
+                    ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable()->searchable(),
+            ])->paginated([5, 10, 25, 50])
+            ->defaultPaginationPageOption(5)
             ->filters([
-                //
+                // FILTRAR POR CAMPO CODIGO
+                Tables\Filters\Filter::make('codigo')
+                    ->form([
+                        Forms\Components\TextInput::make('codigo')->label('Codigo:'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['codigo'],
+                            fn(Builder $query, $codigo): Builder => $query->where('codigo', $codigo)
+                        );
+                    }),
+
+                // FILTRAR POR CAMPO DOCUMENTO
+                Tables\Filters\Filter::make('documento')
+                    ->form([
+                        Forms\Components\TextInput::make('documento')->label('Documento:'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['documento'],
+                            fn(Builder $query, $documento): Builder => $query->where('documento', $documento)
+                        );
+                    }),
+
+                // FILTRAR POR CAMPO FECHA_JURAMENTO
+                Tables\Filters\Filter::make('fecha_juramento')
+                    ->form([
+                        Forms\Components\TextInput::make('fecha_juramento')->label('Fecha Juramento:'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['fecha_juramento'],
+                            fn(Builder $query, $fecha_juramento): Builder => $query->where('fecha_juramento', $fecha_juramento)
+                        );
+                    }),
+
+                // FILTRAR POR CAMPO (RELACION) CATEGORIA
+                Tables\Filters\SelectFilter::make('categoria_id')
+                    ->label('Categoria:')
+                    ->relationship('categoria', 'categoria')
+                    ->preload()
+                    ->multiple(),
+
+                // FILTRAR POR CAMPO (RELACION) ESTADO
+                Tables\Filters\SelectFilter::make('estado_id')
+                    ->label('Estado:')
+                    ->relationship('estado', 'estado')
+                    ->preload()
+                    ->multiple(),
+
+                // FILTRAR POR CAMPO (RELACION) PAIS
+                Tables\Filters\SelectFilter::make('pais_id')
+                    ->label('Pais:')
+                    ->relationship('pais', 'pais')
+                    ->preload()
+                    ->multiple(),
+
+                // FILTRAR POR CAMPO COMPANIA_ID
+                Tables\Filters\SelectFilter::make('compania_id')
+                    ->label('Compania')
+                    ->options(CompaniaVista::obtenerListadoCompanias())
+                    ->searchable()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -103,9 +163,9 @@ class PersonalResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-        ->select('idpersonal','nombres', 'apellidos', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id')
-        ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais'])
-        ->orderBy('nombrecompleto', 'asc');
+            ->select('idpersonal', 'nombres', 'apellidos', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id')
+            ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais'])
+            ->orderBy('nombrecompleto', 'asc');
     }
 
     public static function getRelations(): array
