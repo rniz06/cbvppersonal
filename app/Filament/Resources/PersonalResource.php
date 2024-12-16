@@ -102,7 +102,10 @@ class PersonalResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->orderBy('nombrecompleto', 'asc');
+        return parent::getEloquentQuery()
+        ->select('idpersonal','nombres', 'apellidos', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id')
+        ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais'])
+        ->orderBy('nombrecompleto', 'asc');
     }
 
     public static function getRelations(): array
