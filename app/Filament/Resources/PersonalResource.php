@@ -86,8 +86,8 @@ class PersonalResource extends Resource
                 Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
-                    ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable()->searchable(),
-            ])->paginated([5, 10, 25, 50])
+                    ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable(),
+            ])->paginated([5, 10, 20, 25])
             ->defaultPaginationPageOption(5)
             ->filters([
                 // FILTRAR POR CAMPO CODIGO
@@ -136,6 +136,12 @@ class PersonalResource extends Resource
                     ->relationship('estado', 'estado')
                     ->preload()
                     ->multiple(),
+
+                // FILTRAR POR CAMPO (RELACION) SEXO
+                Tables\Filters\SelectFilter::make('sexo_id')
+                    ->label('Sexo:')
+                    ->relationship('sexo', 'sexo')
+                    ->preload(),
 
                 // FILTRAR POR CAMPO (RELACION) PAIS
                 Tables\Filters\SelectFilter::make('pais_id')
