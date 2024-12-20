@@ -19,7 +19,7 @@ class ListPersonals extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Resgistrar Personal'),
+            Actions\CreateAction::make()->label('Registrar Personal'),
         ];
     }
 

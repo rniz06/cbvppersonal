@@ -10,7 +10,7 @@ class CreatePersonal extends CreateRecord
 {
     protected static string $resource = PersonalResource::class;
 
-    protected static ?string $title = 'Resgistrar Personal';
+    protected static ?string $title = 'Registrar Personal';
 
     protected function getRedirectUrl(): string
     {
