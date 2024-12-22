@@ -43,9 +43,16 @@ class UsuarioResource extends Resource
                             ->default('Paraguay2024')
                             ->revealable()
                             ->password()
-                            ->dehydrated(fn ($state) => filled($state))
-                            ->required(fn (string $context) => $context === 'create')
+                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn(string $context) => $context === 'create')
                             ->maxLength(255),
+
+                        Forms\Components\Select::make('roles')
+                            ->label('Roles')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable(),
                         // Forms\Components\Select::make('roles')
                         //     ->label('Roles')
                         //     ->relationship('roles', 'name')

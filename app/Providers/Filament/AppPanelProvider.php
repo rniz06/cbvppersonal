@@ -55,6 +55,9 @@ class AppPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+            ])
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
             ->sidebarCollapsibleOnDesktop()
             ->brandLogo(asset('img/cbvp-logo-png.webp'))
