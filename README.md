@@ -46,6 +46,10 @@ Sistema de gestion de pesonal desarrollo con laravel utilizando ademas el paquet
     ```bash
     php artisan shield:install
     ```
+7. En caso de que el comando anterior solo genere los permisos y policies para el modulo de roles ejecutar el siguiente comando:
+    ```bash
+    php artisan shield:generate --all
+    ```
 
 ¡Listo! Ahora puedes acceder al sistema en tu navegador web.
 
