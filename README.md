@@ -1,3 +1,5 @@
+![Logo](http://www.bomberoscbvp.org.py/wp-content/uploads/2022/12/CBVP-escudo.png)
+
 # Sistema de Gestión de Personal CBVP
 
 Sistema de gestion de pesonal desarrollo con laravel utilizando ademas el paquete filament
