@@ -155,7 +155,7 @@ class PersonalResource extends Resource
                     ->label('Compania')
                     ->options(CompaniaVista::obtenerListadoCompanias())
                     ->searchable()
-            ])
+            ])->filtersFormColumns(2)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

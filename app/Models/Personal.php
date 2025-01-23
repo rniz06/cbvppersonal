@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\Personal\Categoria;
 use App\Models\Personal\Estado;
 use App\Models\Personal\Sexo;
 use Illuminate\Database\Eloquent\Model;
 
-class Personal extends Model
+class Personal extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
+
     protected $table = "personal";
 
     protected $primaryKey = 'idpersonal';
