@@ -1,8 +1,8 @@
 ![Logo](http://www.bomberoscbvp.org.py/wp-content/uploads/2022/12/CBVP-escudo.png)
 
-# Sistema de Gestión de Personal CBVP
+# Sistema de Gestión de Expedientes Electronicos
 
-Sistema de gestion de pesonal desarrollo con laravel utilizando ademas el paquete filament
+Sistema de Personal desarrollado con laravel utilizando ademas el paquete filament
 
 ## Tecnologías
 - Laravel 11
@@ -46,20 +46,31 @@ Sistema de gestion de pesonal desarrollo con laravel utilizando ademas el paquet
     ```bash
     php artisan shield:install
     ```
-7. En caso de que el comando anterior solo genere los permisos y policies para el modulo de roles ejecutar el siguiente comando:
-    ```bash
-    php artisan shield:generate --all
-    ```
 
 ¡Listo! Ahora puedes acceder al sistema en tu navegador web.
+
+# OBSERVACIONES:
+
+Verificar que los permisos, roles y policies del paquete se hallan generado correctamente, en caso que no, ejecutar los siguientes comandos:
+
+```bash
+php artisan shield:generate --all
+```
+Genera devuelta todos los permisos, roles y policies.
+
+```bash
+php artisan shield:super-admin
+```
+
+Comando para seleccionar usuario administrador.
 
 # Uso
 
 Una vez instalado, puedes iniciar sesión en el sistema utilizando las siguientes credenciales:
 
-Correo: ti@cbvp.org.py
-Contraseña: Paraguay2024!
+Correo: #
+Contraseña: #
 
 # Soporte
 
-Ante dudas o consultas contactar con el departamento de TI
+Ante dudas o consultas contactar al correo ronaldalexisniznunez@gmail.com
