@@ -38,6 +38,10 @@ return new class extends Migration
         Schema::table('personal_sexo', function (Blueprint $table) {
             $table->softDeletes();
         });
+
+        Schema::table('personal_estado_actualizar', function (Blueprint $table) {
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -70,6 +74,9 @@ return new class extends Migration
         });
 
         Schema::table('personal_sexo', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+        });
+        Schema::table('personal_estado_actualizar', function (Blueprint $table) {
             $table->dropColumn('deleted_at');
         });
     }

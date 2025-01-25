@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\Personal\Categoria;
 use App\Models\Personal\Estado;
+use App\Models\Personal\EstadoActualizar;
 use App\Models\Personal\Sexo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,6 +34,8 @@ class Personal extends Model implements Auditable
         'sexo_id',
         'nacionalidad_id',
         'contrasena',
+        'ultima_actualizacion',
+        'estado_actualizar_id',
     ];
 
     /**
@@ -77,6 +80,17 @@ class Personal extends Model implements Auditable
     public function pais()
     {
         return $this->belongsTo(Pais::class, 'nacionalidad_id');
+    }
+
+    /**
+     * Relación de "uno a muchos" con la tabla "personal_estado_actualizar".
+     * Cada registro de este modelo pertenece a una estadoActualizar específico a través del campo "estado_actualizar_id".
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function estadoActualizar()
+    {
+        return $this->belongsTo(EstadoActualizar::class, 'estado_actualizar_id');
     }
 
     /**

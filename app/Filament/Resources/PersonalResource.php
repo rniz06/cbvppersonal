@@ -70,7 +70,7 @@ class PersonalResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombrecompleto')->label('Nombre:')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nombrecompleto')->label('Nombre Completo:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('codigo')->label('Codigo:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('documento')->label('Documento:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('fecha_juramento')->label('Juramento:')->sortable()->searchable(),
@@ -83,6 +83,14 @@ class PersonalResource extends Resource
                             default => 'danger'
                         };
                     })->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('estadoActualizar.estado')->label('Actualizar:')->badge()
+                ->color(function ($state) {
+                    return match ($state) {
+                        'Falta actualizar' => 'danger',
+                        'Actualizado' => 'success',
+                        //default => 'danger'
+                    };
+                })->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
@@ -169,8 +177,8 @@ class PersonalResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->select('idpersonal', 'nombres', 'apellidos', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id')
-            ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais'])
+            ->select('idpersonal', 'nombres', 'apellidos', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id', 'estado_actualizar_id')
+            ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais', 'estadoActualizar:idpersonal_estado_actualizar,estado'])
             ->orderBy('nombrecompleto', 'asc');
     }
 
