@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Resources\PersonalResource\Pages;
 use App\Filament\Resources\PersonalResource\RelationManagers;
 use App\Models\CompaniaVista;
@@ -70,11 +72,11 @@ class PersonalResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombrecompleto')->label('Nombre Completo:')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('codigo')->label('Codigo:')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('documento')->label('Documento:')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('fecha_juramento')->label('Juramento:')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('categoria.categoria')->label('Categoria:')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nombrecompleto')->label('Nombre Completo:')->sortable(),
+                Tables\Columns\TextColumn::make('codigo')->label('Codigo:')->sortable(),
+                Tables\Columns\TextColumn::make('documento')->label('Documento:')->sortable(),
+                Tables\Columns\TextColumn::make('fecha_juramento')->label('Juramento:')->sortable(),
+                Tables\Columns\TextColumn::make('categoria.categoria')->label('Categoria:')->sortable(),
                 Tables\Columns\TextColumn::make('estado.estado')->label('Estado:')->badge()
                     ->color(function ($state) {
                         return match ($state) {
@@ -82,22 +84,34 @@ class PersonalResource extends Resource
                             'PERIODO DE PRUEBA', 'REINTEGRO PROVISORIO' => 'warning',
                             default => 'danger'
                         };
-                    })->searchable()->sortable(),
+                    })->sortable(),
                 Tables\Columns\TextColumn::make('estadoActualizar.estado')->label('Actualizar:')->badge()
-                ->color(function ($state) {
-                    return match ($state) {
-                        'Falta actualizar' => 'danger',
-                        'Actualizado' => 'success',
-                        //default => 'danger'
-                    };
-                })->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable()->searchable(),
+                    ->color(function ($state) {
+                        return match ($state) {
+                            'Falta actualizar' => 'danger',
+                            'Actualizado' => 'success',
+                            //default => 'danger'
+                        };
+                    })->sortable(),
+                Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable(),
+                Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable(),
+                //Tables\Columns\TextColumn::make('compania.compania')->label('Compania:')->sortable()->searchable(), //Genera un error la relacion al usar buscador
                 Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
                     ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable(),
             ])->paginated([5, 10, 20, 25])
             ->defaultPaginationPageOption(5)
             ->filters([
+                // FILTRAR POR CAMPO NOMBRECOMPLETO
+                Tables\Filters\Filter::make('nombrecompleto')
+                    ->form([
+                        Forms\Components\TextInput::make('nombrecompleto')->label('Nombre Completo:'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['nombrecompleto'],
+                            fn(Builder $query, $nombrecompleto): Builder => $query->where('nombrecompleto', 'like', '%' . $nombrecompleto . '%') // Se agrega la funcion like debido a que el campo es de tipo TEXT
+                        );
+                    })->columnSpan(1),
+
                 // FILTRAR POR CAMPO CODIGO
                 Tables\Filters\Filter::make('codigo')
                     ->form([
@@ -107,7 +121,7 @@ class PersonalResource extends Resource
                             $data['codigo'],
                             fn(Builder $query, $codigo): Builder => $query->where('codigo', $codigo)
                         );
-                    }),
+                    })->columnSpan(1),
 
                 // FILTRAR POR CAMPO DOCUMENTO
                 Tables\Filters\Filter::make('documento')
@@ -118,7 +132,8 @@ class PersonalResource extends Resource
                             $data['documento'],
                             fn(Builder $query, $documento): Builder => $query->where('documento', $documento)
                         );
-                    }),
+                    })
+                    ->columnSpan(1),
 
                 // FILTRAR POR CAMPO FECHA_JURAMENTO
                 Tables\Filters\Filter::make('fecha_juramento')
@@ -129,41 +144,60 @@ class PersonalResource extends Resource
                             $data['fecha_juramento'],
                             fn(Builder $query, $fecha_juramento): Builder => $query->where('fecha_juramento', $fecha_juramento)
                         );
-                    }),
+                    })
+                    ->columnSpan(1),
 
                 // FILTRAR POR CAMPO (RELACION) CATEGORIA
                 Tables\Filters\SelectFilter::make('categoria_id')
                     ->label('Categoria:')
                     ->relationship('categoria', 'categoria')
                     ->preload()
-                    ->multiple(),
+                    ->multiple()
+                    ->columnSpan(1),
 
                 // FILTRAR POR CAMPO (RELACION) ESTADO
                 Tables\Filters\SelectFilter::make('estado_id')
                     ->label('Estado:')
                     ->relationship('estado', 'estado')
                     ->preload()
-                    ->multiple(),
+                    ->multiple()
+                    ->columnSpan(1),
+
+                // FILTRAR POR CAMPO (RELACION) ESTADOACTUALIZAR
+                Tables\Filters\SelectFilter::make('estado_actualizar_id')
+                    ->label('Actualizar:')
+                    ->relationship('estadoActualizar', 'estado')
+                    ->preload()
+                    ->multiple()
+                    ->columnSpan(1),
 
                 // FILTRAR POR CAMPO (RELACION) SEXO
                 Tables\Filters\SelectFilter::make('sexo_id')
                     ->label('Sexo:')
                     ->relationship('sexo', 'sexo')
-                    ->preload(),
+                    ->preload()
+                    ->columnSpan(1),
 
                 // FILTRAR POR CAMPO (RELACION) PAIS
                 Tables\Filters\SelectFilter::make('pais_id')
                     ->label('Pais:')
                     ->relationship('pais', 'pais')
                     ->preload()
-                    ->multiple(),
+                    ->multiple()
+                    ->columnSpan(1),
 
                 // FILTRAR POR CAMPO COMPANIA_ID
                 Tables\Filters\SelectFilter::make('compania_id')
                     ->label('Compania')
                     ->options(CompaniaVista::obtenerListadoCompanias())
                     ->searchable()
-            ])->filtersFormColumns(2)
+                    ->columnSpan(1)
+            ], layout: FiltersLayout::AboveContentCollapsible)
+            ->filtersTriggerAction(
+                fn(Action $action) => $action
+                    ->button()
+                    ->label('Filtros'),
+            )
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

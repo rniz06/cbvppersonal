@@ -93,6 +93,11 @@ class Personal extends Model implements Auditable
         return $this->belongsTo(EstadoActualizar::class, 'estado_actualizar_id');
     }
 
+    public function compania()
+    {
+        return $this->belongsTo(CompaniaVista::class, 'compania_id', 'idcompanias');
+    }
+
     /**
      * Metodo empleado para realizar una consulta a la base de datos emepy_bd
      * a la tabla (VISTA) de companias para obtener y mostrar el nombre de la compania

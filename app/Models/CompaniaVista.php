@@ -14,6 +14,11 @@ class CompaniaVista extends Model
 
     public $timestamps = false;
 
+    public function personal()
+    {
+        return $this->hasMany(Personal::class, 'compania_id', 'idcompanias');
+    }
+
     public static function obtenerListadoCompanias()
     {
         return CompaniaVista::selectRaw('idcompanias AS id, CONCAT(compania, \' - \', departamento, \' - \', ciudad) AS label')

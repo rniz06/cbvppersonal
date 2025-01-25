@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\PersonalResource\Pages;
 
+use pxlrbt\FilamentExcel\Columns\Column;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PersonalResource;
@@ -20,6 +23,18 @@ class ListPersonals extends ListRecords
     {
         return [
             Actions\CreateAction::make()->label('Registrar Personal'),
+            ExportAction::make()
+                ->exports([
+                    ExcelExport::make()
+                        //->queue() // Para encolar las operaciones de exportacion
+                        ->fromTable()
+                        //->withFilename(fn ($resource) => $resource::getModelLabel() . '-' . date('Y-m-d-h-m-s'))
+                        ->withFilename('CBVP-Listado-De-Personales-' . date('Y-m-d_h-m')) //Definir el nombre del archivo
+                        ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
+                    // ->withColumns([
+                    //     Column::make('updated_at'), //Agregar columnas adicionales
+                    // ])
+                ]),
         ];
     }
 
