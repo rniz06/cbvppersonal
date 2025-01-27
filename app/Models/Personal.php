@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\Personal\Categoria;
+use App\Models\Personal\Contacto;
 use App\Models\Personal\Estado;
 use App\Models\Personal\EstadoActualizar;
 use App\Models\Personal\Sexo;
@@ -96,6 +97,17 @@ class Personal extends Model implements Auditable
     public function compania()
     {
         return $this->belongsTo(CompaniaVista::class, 'compania_id', 'idcompanias');
+    }
+
+    /**
+     * Relación de "uno a muchos" (inversa) con la tabla "personal_contactos".
+     * Un TipoContacto puede tener varios registros asociados en la tabla "personal_contactos".
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contactos()
+    {
+        return $this->hasMany(Contacto::class, 'personal_id');
     }
 
     /**

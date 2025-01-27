@@ -199,6 +199,7 @@ class PersonalResource extends Resource
                     ->label('Filtros'),
             )
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -228,6 +229,7 @@ class PersonalResource extends Resource
         return [
             'index' => Pages\ListPersonals::route('/'),
             'create' => Pages\CreatePersonal::route('/create'),
+            'view' => Pages\ViewPersonal::route('/{record}'),
             'edit' => Pages\EditPersonal::route('/{record}/edit'),
         ];
     }
