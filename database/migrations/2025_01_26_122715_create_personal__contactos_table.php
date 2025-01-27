@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_personal_contacto');
             $table->unsignedBigInteger('personal_id');
             $table->unsignedBigInteger('tipo_contacto_id');
-            $table->string('contacto', 50);
+            $table->string('contacto', 50)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PersonalResource\Pages;
 
 use App\Filament\Resources\PersonalResource;
+use App\Livewire\Personal\Contacto as PersonalContacto;
 use App\Models\Personal;
 use App\Models\Personal\Contacto;
 use App\Models\Personal\TipoContacto;
@@ -10,6 +11,7 @@ use Filament\Actions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Livewire;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
@@ -64,14 +66,16 @@ class ViewPersonal extends ViewRecord
                         TextEntry::make('sexo.sexo'),
                         TextEntry::make('pais.pais'),
                     ])->columns(2),
-                    Section::make()
-                    ->schema([
-                        TextEntry::make('contactos.contacto'),
-                        // RepeatableEntry::make('contactos')
-                        // ->schema([
-                        //     TextEntry::make('contacto'),
-                        // ])
-                    ])->columns(2)
+                    Livewire::make(PersonalContacto::class)->columnSpanFull(),
+                    // Section::make()
+                    // ->schema([
+                        
+                    //     //TextEntry::make('contactos.contacto'),
+                    //     // RepeatableEntry::make('contactos')
+                    //     // ->schema([
+                    //     //     TextEntry::make('contacto'),
+                    //     // ])
+                    // ])->columns(1)
                 // Grid::make(3)
                 //     ->schema([
                 //         //Livewire::make(Comentario::class)->columnSpan(2),
