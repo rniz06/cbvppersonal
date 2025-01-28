@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'ronald.niz@cbvp.org.py',
             'password' => Hash::make('Rann2006'),
         ]);
+
+        // Seeder a ejecutarse con el principal
+        $this->call([
+            ParentescoSeeder::class,
+        ]);
     }
 }

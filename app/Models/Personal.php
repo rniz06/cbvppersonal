@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\Personal\Categoria;
 use App\Models\Personal\Contacto;
+use App\Models\Personal\ContactoEmergencia;
 use App\Models\Personal\Estado;
 use App\Models\Personal\EstadoActualizar;
 use App\Models\Personal\Sexo;
@@ -108,6 +109,17 @@ class Personal extends Model implements Auditable
     public function contactos()
     {
         return $this->hasMany(Contacto::class, 'personal_id');
+    }
+
+    /**
+     * Relación de "uno a muchos" (inversa) con la tabla "personal_contactos_emergencias".
+     * Un Personal puede tener varios registros asociados en la tabla "personal_contactos_emergencias".
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contactosEmergencias()
+    {
+        return $this->hasMany(ContactoEmergencia::class, 'personal_id');
     }
 
     /**

@@ -29,4 +29,15 @@ class TipoContacto extends Model implements Auditable
     {
         return $this->hasMany(Contacto::class);
     }
+
+    /**
+     * Relación de "uno a muchos" (inversa) con la tabla "personal_contactos_emergencias".
+     * Un TipoContacto puede tener varios registros asociados en la tabla "personal_contactos_emergencias".
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contactosEmergencias()
+    {
+        return $this->hasMany(ContactoEmergencia::class);
+    }
 }

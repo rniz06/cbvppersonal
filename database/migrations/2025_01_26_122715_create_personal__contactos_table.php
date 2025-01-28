@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('contacto', 50)->unique();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('personal_id')->references('idpersonal')->on('personal')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('tipo_contacto_id')->references('id_tipo_contacto')->on('personal_tipo_contactos')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
