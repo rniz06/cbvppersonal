@@ -120,6 +120,7 @@ class ViewPersonal extends ViewRecord
                         TextEntry::make('estado.estado')->label('Estado:')->badge()->color('warning'),
                         TextEntry::make('sexo.sexo')->label('Sexo:')->badge()->color('warning'),
                         TextEntry::make('pais.pais')->label('Pais:')->badge()->color('warning'),
+                        TextEntry::make('grupoSanguineo.grupo_sanguineo')->label('Grupo Sanguineo:')->badge()->color('warning'),
                         TextEntry::make('estadoActualizar.estado')->label('Actualizar:')->badge()
                         ->color(function ($state) {
                             return match ($state) {

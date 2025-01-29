@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ParentescoSeeder::class,
             PersonalEstadoActualizar::class,
             PersonalTipoContactoSeeder::class,
+            PersonalGrupoSanguineoSeeder::class,
         ]);
     }
 }

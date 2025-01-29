@@ -63,6 +63,10 @@ class PersonalResource extends Resource
                             ->relationship('pais', 'pais')
                             ->preload()
                             ->searchable(),
+                        Forms\Components\Select::make('grupo_sanguineo_id')->label('Grupo Sanguineo:')
+                            ->required()
+                            ->relationship('grupoSanguineo', 'grupo_sanguineo')
+                            ->preload(),
                     ])->columns(3),
             ]);
     }
@@ -94,6 +98,7 @@ class PersonalResource extends Resource
                     })->sortable(),
                 Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable(),
                 Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable(),
+                Tables\Columns\TextColumn::make('grupoSanguineo.grupo_sanguineo')->label('Grupo Sanguineo:')->sortable()->badge(),
                 Tables\Columns\TextColumn::make('compania.compania')->label('Compania:')->sortable(), //Genera un error la relacion al usar buscador
                 //Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
                 //    ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable(),
@@ -211,8 +216,8 @@ class PersonalResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->select('idpersonal', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id', 'estado_actualizar_id', 'ultima_actualizacion')
-            ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais', 'estadoActualizar:idpersonal_estado_actualizar,estado'])
+            ->select('idpersonal', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id', 'estado_actualizar_id', 'ultima_actualizacion', 'grupo_sanguineo_id')
+            ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais', 'estadoActualizar:idpersonal_estado_actualizar,estado', 'grupoSanguineo:idpersonal_grupo_sanguineo,grupo_sanguineo'])
             ->orderBy('nombrecompleto', 'asc');
     }
 

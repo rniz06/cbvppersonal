@@ -9,6 +9,7 @@ use App\Models\Personal\Contacto;
 use App\Models\Personal\ContactoEmergencia;
 use App\Models\Personal\Estado;
 use App\Models\Personal\EstadoActualizar;
+use App\Models\Personal\GrupoSanguineo;
 use App\Models\Personal\Sexo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,6 +37,7 @@ class Personal extends Model implements Auditable
         'contrasena',
         'ultima_actualizacion',
         'estado_actualizar_id',
+        'grupo_sanguineo_id',
     ];
 
     /**
@@ -91,6 +93,17 @@ class Personal extends Model implements Auditable
     public function estadoActualizar()
     {
         return $this->belongsTo(EstadoActualizar::class, 'estado_actualizar_id');
+    }
+
+    /**
+     * Relación de "uno a muchos" con la tabla "personal_grupo_sanguineo".
+     * Cada registro de este modelo pertenece a una grupoSanguineo específico a través del campo "grupo_sanguineo_id".
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function grupoSanguineo()
+    {
+        return $this->belongsTo(GrupoSanguineo::class, 'grupo_sanguineo_id');
     }
 
     public function compania()
