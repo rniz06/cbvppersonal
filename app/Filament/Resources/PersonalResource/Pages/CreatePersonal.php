@@ -17,10 +17,12 @@ class CreatePersonal extends CreateRecord
         return PersonalResource::getUrl('index');
     }
 
-    // protected function mutateFormDataBeforeCreate(array $data): array
-    // {
-    //     // $data['nombrecompleto'] = $data['apellidos'] . ' ' . ',' . ' ' . $data['nombres'];
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['ultima_actualizacion'] = now();
 
-    //     // return $data;
-    // }
+        $data['estado_actualizar_id'] = 2;
+
+        return $data;
+    }
 }

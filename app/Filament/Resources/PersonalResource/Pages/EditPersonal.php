@@ -24,10 +24,12 @@ class EditPersonal extends EditRecord
         return PersonalResource::getUrl('index');
     }
 
-    // protected function mutateFormDataBeforeSave(array $data): array
-    // {
-    //     $data['nombrecompleto'] = $data['apellidos'] . ' ' . ',' . ' ' . $data['nombres'];
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['ultima_actualizacion'] = now();
 
-    //     return $data;
-    // }
+        $data['estado_actualizar_id'] = 2;
+
+        return $data;
+    }
 }
