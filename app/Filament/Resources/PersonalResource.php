@@ -33,8 +33,7 @@ class PersonalResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('nombres')->label('Nombres:')->required()->maxLength(45),
-                        Forms\Components\TextInput::make('apellidos')->label('Apellidos:')->required()->maxLength(45),
+                        Forms\Components\TextInput::make('nombrecompleto')->label('Nombre Completo:')->required()->maxLength(100),
                         Forms\Components\TextInput::make('codigo')->label('Codigo:')->required()->numeric()->mask('99999'),
                         Forms\Components\TextInput::make('fecha_juramento')->label('Fecha Juramento:')->required()->numeric()->mask('9999'),
                         Forms\Components\TextInput::make('documento')->label('Documento:')->required()->mask('999999999999999'),
@@ -212,7 +211,7 @@ class PersonalResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->select('idpersonal', 'nombres', 'apellidos', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id', 'estado_actualizar_id')
+            ->select('idpersonal', 'nombrecompleto', 'codigo', 'categoria_id', 'compania_id', 'fecha_juramento', 'estado_id', 'documento', 'sexo_id', 'nacionalidad_id', 'estado_actualizar_id', 'ultima_actualizacion')
             ->with(['categoria:idpersonal_categorias,categoria', 'estado:idpersonal_estados,estado', 'sexo:idpersonal_sexo,sexo', 'pais:idpaises,pais', 'estadoActualizar:idpersonal_estado_actualizar,estado'])
             ->orderBy('nombrecompleto', 'asc');
     }

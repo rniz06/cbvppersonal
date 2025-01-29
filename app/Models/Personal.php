@@ -24,8 +24,6 @@ class Personal extends Model implements Auditable
     public $timestamps = false;
 
     protected $fillable = [
-        'nombres',
-        'apellidos',
         'nombrecompleto',
         'codigo',
         'categoria_id',

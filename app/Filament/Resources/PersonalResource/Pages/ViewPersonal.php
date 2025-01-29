@@ -111,8 +111,7 @@ class ViewPersonal extends ViewRecord
             ->schema([
                 Section::make()
                     ->schema([
-                        TextEntry::make('nombres')->label('Nombres:')->badge()->color('warning'),
-                        TextEntry::make('apellidos')->label('Apellidos:')->badge()->color('warning'),
+                        TextEntry::make('nombrecompleto')->label('Nombres:')->badge()->color('warning'),
                         TextEntry::make('codigo')->label('Codigo:')->badge()->color('warning'),
                         TextEntry::make('fecha_juramento')->label('Fecha de Juramento:')->badge()->color('warning'),
                         TextEntry::make('documento')->label('Documento:')->badge()->color('warning'),
@@ -121,6 +120,15 @@ class ViewPersonal extends ViewRecord
                         TextEntry::make('estado.estado')->label('Estado:')->badge()->color('warning'),
                         TextEntry::make('sexo.sexo')->label('Sexo:')->badge()->color('warning'),
                         TextEntry::make('pais.pais')->label('Pais:')->badge()->color('warning'),
+                        TextEntry::make('estadoActualizar.estado')->label('Actualizar:')->badge()
+                        ->color(function ($state) {
+                            return match ($state) {
+                                'Falta Actualizar' => 'danger',
+                                'Actualizado' => 'success',
+                                //default => 'danger'
+                            };
+                        }),
+                        TextEntry::make('ultima_actualizacion')->label('Ultima actualización:')->badge()->color('warning')->date(),
                     ])->columns(2),
                 Livewire::make(PersonalContacto::class)->key('personal-contacto-' . $this->record->id),
                 Livewire::make(PersonalEmergencia::class)->key('personal-emergencia-' . $this->record->id),
