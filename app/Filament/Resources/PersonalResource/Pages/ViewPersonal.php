@@ -29,6 +29,13 @@ class ViewPersonal extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+
+            // Logica que crea un boton para abri un modal y realizar un comentario
+            //Actions\Action::make('editar')
+            //->icon('heroicon-m-pencil-square'),
+            Actions\EditAction::make()->label('Actualizar')
+            ->icon('heroicon-m-pencil-square'),
+
             // Logica que crea un boton para abri un modal y realizar un comentario
             Actions\Action::make('contacto')
                 ->icon('heroicon-o-plus')

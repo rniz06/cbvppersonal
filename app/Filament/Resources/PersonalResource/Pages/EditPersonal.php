@@ -17,7 +17,7 @@ class EditPersonal extends EditRecord
         ];
     }
 
-    protected static ?string $title = 'Editar Personal';
+    protected static ?string $title = 'Actualizar Personal';
 
     protected function getRedirectUrl(): string
     {
