@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personal_parentescos', function (Blueprint $table) {
-            $table->id('id_parentesco');
-            $table->string('parentesco', 50);
+        Schema::create('personal_estado_actualizar', function (Blueprint $table) {
+            $table->id('idpersonal_estado_actualizar');
+            $table->string('estado');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('personal_parentescos');
+        Schema::dropIfExists('personal_estado_actualizar');
     }
 };

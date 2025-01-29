@@ -23,6 +23,10 @@ return new class extends Migration
             $table->softDeletes();
         });
 
+        Schema::table('personal', function (Blueprint $table) {
+            $table->date('ultima_actualizacion')->nullable()->after('contrasena');
+        });
+
         Schema::table('personal_categorias', function (Blueprint $table) {
             $table->softDeletes();
         });
@@ -31,15 +35,7 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::table('personal_reportes', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
         Schema::table('personal_sexo', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
-        Schema::table('personal_estado_actualizar', function (Blueprint $table) {
             $table->softDeletes();
         });
     }

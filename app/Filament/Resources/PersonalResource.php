@@ -88,16 +88,16 @@ class PersonalResource extends Resource
                 Tables\Columns\TextColumn::make('estadoActualizar.estado')->label('Actualizar:')->badge()
                     ->color(function ($state) {
                         return match ($state) {
-                            'Falta actualizar' => 'danger',
+                            'Falta Actualizar' => 'danger',
                             'Actualizado' => 'success',
                             //default => 'danger'
                         };
                     })->sortable(),
                 Tables\Columns\TextColumn::make('pais.pais')->label('Pais:')->sortable(),
                 Tables\Columns\TextColumn::make('sexo.sexo')->label('Sexo:')->sortable(),
-                //Tables\Columns\TextColumn::make('compania.compania')->label('Compania:')->sortable()->searchable(), //Genera un error la relacion al usar buscador
-                Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
-                    ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable(),
+                Tables\Columns\TextColumn::make('compania.compania')->label('Compania:')->sortable(), //Genera un error la relacion al usar buscador
+                //Tables\Columns\TextColumn::make('obtenerNombreCompania')->label('Compania:')
+                //    ->getStateUsing(fn($record) => $record->obtenerNombreCompania())->sortable(),
             ])->paginated([5, 10, 20, 25])
             ->defaultPaginationPageOption(5)
             ->filters([
@@ -200,7 +200,7 @@ class PersonalResource extends Resource
             )
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Actualizar'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

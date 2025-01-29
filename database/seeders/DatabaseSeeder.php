@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
         // Seeder a ejecutarse con el principal
         $this->call([
             ParentescoSeeder::class,
+            PersonalEstadoActualizar::class,
+            PersonalTipoContactoSeeder::class,
         ]);
     }
 }
