@@ -205,6 +205,10 @@ class PersonalResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->label('Actualizar'),
+                Tables\Actions\Action::make('ficha')->label('Exportar')
+                ->icon('heroicon-c-arrow-down-tray')
+                ->url(fn(Personal $record): string => route('personal.ficha', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
